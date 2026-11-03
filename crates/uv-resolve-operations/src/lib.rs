@@ -25,7 +25,7 @@ use uv_platform_tags::Tags;
 use uv_pypi_types::Conflicts;
 use uv_requirements::{
     GroupsSpecification, LookaheadResolver, NamedRequirementsResolver, RequirementsSource,
-    RequirementsSpecification, SourceTree, SourceTreeResolution, SourceTreeResolver,
+    RequirementsSpecification, SourceTree, SourceTreeResolver,
     partition_requirements,
 };
 use uv_resolver::{

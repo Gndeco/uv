@@ -18794,15 +18794,10 @@ fn pep_751_compile_override_replaces_env_marker() -> Result<()> {
     let context = uv_test::test_context!("3.12");
 
     let wheels = context.temp_dir.child("wheels");
-    let (filename, wheel) = generate_wheel(
+    let (filename, wheel) = WheelBuilder::new(
         &"override-target".parse()?,
         &"2".parse()?,
-        &[],
-        &BTreeMap::new(),
-        None,
-        "py3-none-any",
-        &[],
-    );
+    ).build();
     wheels.child(filename).write_binary(&wheel)?;
 
     context
@@ -18867,15 +18862,10 @@ fn pep_751_compile_override_preserves_declared() -> Result<()> {
     // Verify original version is properly overridden
 
     let wheels = context.temp_dir.child("wheels");
-    let (filename, wheel) = generate_wheel(
+    let (filename, wheel) = WheelBuilder::new(
         &"override-target".parse()?,
         &"2".parse()?,
-        &[],
-        &BTreeMap::new(),
-        None,
-        "py3-none-any",
-        &[],
-    );
+    ).build();
     wheels.child(filename).write_binary(&wheel)?;
 
     let pyproject_toml = context.temp_dir.child("pyproject.toml");
@@ -18968,15 +18958,10 @@ fn pep_751_compile_override_preserves_declared_false() -> Result<()> {
     // universal override. Markers on requirements themselves we drop with override insertion.
 
     let wheels = context.temp_dir.child("wheels");
-    let (filename, wheel) = generate_wheel(
+    let (filename, wheel) = WheelBuilder::new(
         &"override-target".parse()?,
         &"2".parse()?,
-        &[],
-        &BTreeMap::new(),
-        None,
-        "py3-none-any",
-        &[],
-    );
+    ).build();
     wheels.child(filename).write_binary(&wheel)?;
 
     let pyproject_toml = context.temp_dir.child("pyproject.toml");
@@ -19060,15 +19045,10 @@ fn pep_751_compile_override_replaces_raw() -> Result<()> {
     // Verify raw input is properly overridden
 
     let wheels = context.temp_dir.child("wheels");
-    let (filename, wheel) = generate_wheel(
+    let (filename, wheel) = WheelBuilder::new(
         &"override-target".parse()?,
         &"2".parse()?,
-        &[],
-        &BTreeMap::new(),
-        None,
-        "py3-none-any",
-        &[],
-    );
+    ).build();
     wheels.child(filename).write_binary(&wheel)?;
 
     context
@@ -19247,7 +19227,7 @@ rich ; 'lint' in extras
     [[packages]]
     name = "ruff"
     version = "0.3.4"
-    marker = "'wls' in extras or 'c' not in extras"
+    marker = "'c' not in extras or 'wls' in extras"
     sdist = { url = "https://files.pythonhosted.org/packages/a0/98/91e1ad8a6777c300b15cad46a1b507375010f8a53cfeaa17f0385bde1103/ruff-0.3.4.tar.gz", upload-time = 2024-03-21T19:21:26Z, size = 2129882, hashes = { sha256 = "f0f4484c6541a99862b693e13a151435a279b271cff20e37101116a21e2a1ad1" } }
     wheels = [
         { url = "https://files.pythonhosted.org/packages/a4/61/797dce050c288fc8325e6b723baa1dd6aff4851ee1b769350b54fd3e0fe5/ruff-0.3.4-py3-none-macosx_10_12_x86_64.macosx_11_0_arm64.macosx_10_12_universal2.whl", upload-time = 2024-03-21T19:20:30Z, size = 16472324, hashes = { sha256 = "60c870a7d46efcbc8385d27ec07fe534ac32f3b251e4fc44b3cbfd9e09609ef4" } },

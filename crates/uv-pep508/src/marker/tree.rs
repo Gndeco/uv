@@ -1479,17 +1479,17 @@ impl MarkerTree {
             match tree.kind() {
                 MarkerTreeKind::True | MarkerTreeKind::False => {}
                 MarkerTreeKind::Version(kind) => {
-                    for (tree, _) in simplify::collect_edges(kind.edges()) {
+                    for tree in kind.edges().map(|(_, tree)| tree).unique() {
                         imp(tree, f);
                     }
                 }
                 MarkerTreeKind::VersionString(kind) => {
-                    for (tree, _) in simplify::collect_edges(kind.edges()) {
+                    for tree in kind.edges().map(|(_, tree)| tree).unique() {
                         imp(tree, f);
                     }
                 }
                 MarkerTreeKind::String(kind) => {
-                    for (tree, _) in simplify::collect_edges(kind.children()) {
+                    for tree in kind.children().map(|(_, tree)| tree).unique() {
                         imp(tree, f);
                     }
                 }
